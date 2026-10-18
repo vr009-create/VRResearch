@@ -2,7 +2,7 @@
 type: plan
 title: Salesforce sandbox layer
 summary: A React app that sits on top of a Salesforce sandbox and adds dashboards, bulk data tools, an AI assistant, and guided workflows.
-status: draft
+status: active
 demo: salesforce-layer
 tags: [salesforce, react, analytics, ai]
 sources: []
@@ -69,6 +69,40 @@ flowchart LR
 ## Feature areas
 
 Candidate features in each area. These still need confirming, and need to be ranked by value.
+
+### 0. Customizable record pages (first feature, in progress)
+
+The standard Financial Services Cloud Wealth Management Account page is cluttered.
+Three equal columns compete for attention. Empty components (Alerts with no alerts,
+an empty Interaction Summaries illustration, Business Milestones) take up full blocks.
+The Action Launcher uses a whole card for one search box. Key details are squeezed
+into a narrow column.
+
+The redesign:
+- **Header** with the record's identity, an **Actions** menu (replaces the Action
+  Launcher card), and up to four **pinned fields** each user picks.
+- **Alerts** only appear, as a thin banner, when there is an alert.
+- **Details take the main column**, as collapsible sections with tabs for Activity
+  and Milestones.
+- **Side panel** for related lists and FSC components. Empty ones shrink to one line.
+- **Per-user customization**: show or hide any field, pin fields, reorder sections,
+  show or hide side-panel components, hide empty fields, compact or comfortable
+  density, and presets (Advisor, Operations, Everything).
+
+Salesforce has no per-user field choice: Dynamic Forms visibility is set by admins
+with rules. That makes this a good fit for the layer.
+
+**Live mode (Salesforce API):**
+- *Field list:* `ui-api/object-info/Account`, so custom fields appear automatically.
+  Only fields the user has access to are returned.
+- *Record values:* `ui-api/records/{id}`.
+- *Related lists:* `ui-api/related-list-records`.
+- *Saving preferences:* per user, in Salesforce, so they follow the user across
+  devices. Candidates are a small custom object (`Layout_Preference__c`, one record
+  per user and object, holding the settings as JSON) or a hierarchy custom setting.
+- *Edits:* go back through `ui-api/records` (PATCH), so validation rules still apply.
+
+The showcase version uses fictional data and saves preferences in the browser.
 
 ### 1. Dashboards and analytics
 - Pipeline by stage and owner, showing win rate, average deal size, and sales-cycle length

@@ -23,3 +23,7 @@ Append-only. Recent entries: `grep "^## \[" wiki/log.md | tail -5`
 ## [2026-10-18] plan | Salesforce sandbox layer
 - Wrote [[salesforce-layer]] (draft): guardrails, architecture, four feature areas, six milestones, setup steps, open questions.
 - Linked the plan to the `salesforce-layer` entry in the demos app; added Mermaid diagram rendering to the site.
+
+## [2026-10-18] plan | Customizable Account page
+- Added "Customizable record pages" as the first feature of [[salesforce-layer]], based on the cluttered FSC Wealth Management Account page; plan status set to active.
+- Built the showcase version in the demos app (mock data, per-user preferences saved in the browser); live mode will use the Salesforce UI API.

@@ -28,10 +28,11 @@ export const demos: Demo[] = [
     slug: 'salesforce-layer',
     title: 'Salesforce sandbox layer',
     summary:
-      'A layer above a Salesforce sandbox: custom dashboards and analytics, bulk data tools, an AI assistant, and guided workflows.',
-    status: 'planned',
+      'A layer above a Salesforce sandbox. First feature: a decluttered Account page where each user picks the fields and components they see.',
+    status: 'in-progress',
     tags: ['salesforce', 'analytics', 'ai'],
     wikiPath: 'plans/salesforce-layer/',
+    component: lazy(() => import('./salesforce-layer')),
   },
 ]
 
