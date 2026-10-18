@@ -1,0 +1,11 @@
+<header class="border-b border-stone-200 dark:border-stone-800">
+  <div class="mx-auto flex max-w-3xl flex-wrap items-baseline justify-between gap-x-6 gap-y-2 px-4 py-4">
+    <a href="{{ '/' | relative_url }}" class="font-semibold tracking-tight">{{ site.title }}</a>
+    <nav class="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+      {% for item in site.nav %}
+        {% assign href = item.url | relative_url %}
+        <a href="{{ href }}" class="{% if page.url == item.url %}text-blue-700 dark:text-blue-400{% else %}text-stone-600 hover:text-blue-700 dark:text-stone-400 dark:hover:text-blue-400{% endif %}">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+</header>

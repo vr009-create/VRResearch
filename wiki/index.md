@@ -19,3 +19,7 @@ Catalog of every page in the wiki. Format: `- [[page]] — summary (N sources)`.
 ## Concepts
 
 ## Analyses
+
+## Plans
+
+## Artefacts

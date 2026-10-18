@@ -18,9 +18,19 @@ wiki/           Everything you write. You own this layer entirely.
   entities/     People, organizations, products, projects, datasets, places.
   concepts/     Ideas, methods, theories, terms.
   analyses/     Answers to queries worth keeping: comparisons, deep dives.
+  plans/        Plans for demos and research threads (published on the site).
+  artefacts/    Finished outputs: specs, diagrams, decks, write-ups, demo results.
+app/            React demos app (Vite + TypeScript + Tailwind). Not part of the wiki.
 ```
 
 The human browses the wiki in Obsidian with the repo root as the vault.
+
+The project has three strands that link to each other:
+1. **Concepts** are ingested from `raw/` into the wiki.
+2. **Plans and artefacts** are written in `wiki/plans/` and `wiki/artefacts/` and
+   published on the Jekyll site.
+3. **Demos** are built in `app/` and showcased on the site at `/demos/`. Each demo
+   should have a plan page, and the plan and demo link to each other.
 
 ## Page conventions
 
@@ -40,6 +50,10 @@ The human browses the wiki in Obsidian with the repo root as the vault.
   ```
 
 - Source pages also carry `raw: raw/<file>` plus `author`, `date`, and `url` when known.
+- Plan and artefact pages use `type: plan` / `type: artefact` and also carry:
+  `summary:` (one line, shown on the Plans/Artefacts list pages),
+  `status:` (plans: `draft | active | done | dropped`), and, when a demo exists,
+  `demo: <slug>` (adds an "Open the demo" button linking to `/demos/#/demos/<slug>`).
 - Attribute claims: cite the source page as `([[source-page-name]])` after the claim.
 - When sources disagree, keep both claims and mark it with a `> [!warning] Contradiction`
   callout naming the sources. Never silently overwrite an older claim.
@@ -65,6 +79,18 @@ The human browses the wiki in Obsidian with the repo root as the vault.
 3. If the answer is a reusable analysis, offer to file it in `wiki/analyses/`
    (then update the index and log).
 
+### Plan (`plan <thing>`)
+1. Write `wiki/plans/<name>.md`: goal, background (link the concepts it builds on),
+   approach, milestones, open questions. Set `status: draft`.
+2. Update `wiki/index.md` and the log. Plans are public — keep secrets and
+   client-confidential details out.
+
+### Demo (`build a demo for <plan>`)
+1. Create `app/src/demos/<slug>/index.tsx` (copy `starter/`) and register it in
+   `app/src/demos/registry.ts` with `wikiPath: "plans/<name>/"`.
+2. Add `demo: <slug>` to the plan's frontmatter.
+3. Check it with `npm run lint` and `npm run build` in `app/`.
+
 ### Lint (`lint the wiki`)
 Check for and report, then fix with the human's OK:
 contradictions between pages, stale claims superseded by newer sources, orphan
@@ -85,16 +111,32 @@ by 1–5 bullets on what changed. `grep "^## \[" wiki/log.md | tail -5` shows re
 
 ## Published site (Jekyll)
 
-`wiki/` is published as a website by `.github/workflows/pages.yml` on every push to
-`main` that touches it. The repo is public, so everything in `wiki/` is public too —
-never write secrets, credentials, or private data into wiki pages.
+`wiki/` and the demos app are published to https://vr009-create.github.io/VRResearch/
+by `.github/workflows/pages.yml` on every push to `main` that touches them (wiki at
+`/`, demos at `/demos/`). The repo is public, so everything in `wiki/` and `app/` is
+public too — never write secrets, credentials, or private data into them. App
+secrets go in `app/.env`, which git ignores. Demos that need a backend (e.g.
+Salesforce) can't run on Pages; publish a mock-data mode instead.
 
 - `_plugins/obsidian.rb` turns `[[wikilinks]]` into links, renders `> [!kind]` callouts,
   takes each page's title from its first `# Heading`, and builds "Linked from" backlinks.
 - Keep the `permalink` lines on `index.md` (`/`), `overview.md`, and `log.md`.
 - Other pages get URLs from their folder: `wiki/concepts/foo.md` → `/concepts/foo/`.
 - `raw/`, `app/`, and this file are excluded from the site (`_config.yml`).
-- Local preview (needs Ruby 3): `bundle install && bundle exec jekyll serve`.
+- `wiki/plans.md` and `wiki/artefacts.md` list pages automatically by `type`.
+- Local preview (needs Ruby 3): build the CSS, then `bundle install && bundle exec jekyll serve`.
+
+## UI and styling (Tailwind CSS)
+
+Both the Jekyll site and the React app use Tailwind CSS v4 utility classes. Don't add
+separate CSS files or other UI frameworks.
+
+- **Site:** classes go in `_layouts/` and `_includes/`; the source stylesheet is
+  `_tailwind/site.css` (it uses the typography plugin's `prose` for wiki content).
+  CI builds it to `assets/css/site.css` with the Tailwind standalone CLI.
+- **App:** classes go directly in JSX; `app/src/index.css` only imports Tailwind.
+- Shared look: `stone` neutrals, `blue` accent, every component styled for both
+  light and `dark:` modes, layouts that work at phone width.
 
 ## Git
 

@@ -1,0 +1,39 @@
+/* Source stylesheet for the Jekyll site. Built to assets/css/site.css by the
+   Tailwind CLI (see .github/workflows/pages.yml); Jekyll ignores this folder. */
+@import "tailwindcss" source(none);
+@plugin "@tailwindcss/typography";
+
+@source "../_layouts";
+@source "../_includes";
+@source "../_plugins";
+@source "../wiki";
+
+/* Obsidian wikilinks and callouts, emitted by _plugins/obsidian.rb */
+@layer components {
+  .prose .wikilink {
+    @apply text-blue-700 no-underline decoration-blue-700/40 underline-offset-4 hover:underline dark:text-blue-400;
+  }
+  .prose .wikilink.broken {
+    @apply cursor-help text-rose-700 underline decoration-dashed dark:text-rose-400;
+  }
+
+  .prose .callout {
+    @apply not-italic rounded-r-lg border-l-4 border-blue-500 bg-stone-100 px-4 py-1 font-normal text-stone-800 dark:bg-stone-900 dark:text-stone-200;
+  }
+  .prose .callout p:first-of-type::before,
+  .prose .callout p:last-of-type::after {
+    content: none;
+  }
+  .prose .callout-title {
+    @apply mb-1 font-semibold;
+  }
+  .prose :is(.callout-warning, .callout-caution, .callout-question) {
+    @apply border-amber-500;
+  }
+  .prose :is(.callout-danger, .callout-bug, .callout-failure) {
+    @apply border-rose-500;
+  }
+  .prose :is(.callout-tip, .callout-success, .callout-example) {
+    @apply border-emerald-500;
+  }
+}

@@ -1,43 +1,41 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.permalink == "/" %}{{ site.title }}{% else %}{{ page.title }} · {{ site.title }}{% endif %}</title>
-  <meta name="description" content="{{ site.description }}">
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  {% include head.html %}
 </head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-    <nav>
-      <a href="{{ '/' | relative_url }}">Index</a>
-      <a href="{{ '/overview/' | relative_url }}">Overview</a>
-      <a href="{{ '/log/' | relative_url }}">Log</a>
-    </nav>
-  </header>
+<body class="min-h-screen bg-stone-50 px-0 text-stone-900 antialiased dark:bg-stone-950 dark:text-stone-100">
+  {% include header.html %}
 
-  <main>
-    {% if page.type and page.type != "index" and page.type != "log" %}
-      <p class="meta">
-        <span class="type">{{ page.type }}</span>
+  <main class="mx-auto max-w-3xl px-4 py-10">
+    {% if page.type and page.type != "index" and page.type != "log" and page.type != "list" %}
+      <p class="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-500 dark:text-stone-400">
+        <span class="rounded-full bg-stone-200 px-2.5 py-0.5 font-medium uppercase tracking-wide text-stone-700 dark:bg-stone-800 dark:text-stone-300">{{ page.type }}</span>
+        {% if page.status %}<span class="rounded-full bg-amber-100 px-2.5 py-0.5 font-medium text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">{{ page.status }}</span>{% endif %}
         {% if page.updated %}<span>Updated {{ page.updated | date: "%b %-d, %Y" }}</span>{% endif %}
-        {% for tag in page.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
+        {% for tag in page.tags %}<span>#{{ tag }}</span>{% endfor %}
       </p>
     {% endif %}
 
-    <article>{{ content }}</article>
+    <article class="prose prose-stone max-w-none dark:prose-invert prose-headings:tracking-tight prose-a:text-blue-700 dark:prose-a:text-blue-400">
+      {{ content }}
+    </article>
+
+    {% if page.demo %}
+      <a href="{{ '/demos/#/demos/' | append: page.demo | relative_url }}" class="mt-8 inline-flex rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Open the demo →</a>
+    {% endif %}
 
     {% if page.backlinks and page.backlinks.size > 0 %}
-      <aside class="backlinks">
-        <h2>Linked from</h2>
-        <ul>
-          {% for link in page.backlinks %}<li><a href="{{ link.url | relative_url }}">{{ link.title }}</a></li>{% endfor %}
+      <aside class="mt-12 border-t border-stone-200 pt-6 text-sm dark:border-stone-800">
+        <h2 class="font-semibold text-stone-500 dark:text-stone-400">Linked from</h2>
+        <ul class="mt-2 space-y-1">
+          {% for link in page.backlinks %}<li><a href="{{ link.url | relative_url }}" class="text-blue-700 hover:underline dark:text-blue-400">{{ link.title }}</a></li>{% endfor %}
         </ul>
       </aside>
     {% endif %}
   </main>
 
-  <footer>Maintained by an LLM · <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">LLM Wiki pattern</a></footer>
+  <footer class="mx-auto max-w-3xl border-t border-stone-200 px-4 py-6 text-xs text-stone-500 dark:border-stone-800 dark:text-stone-400">
+    Maintained by an LLM · <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f" class="underline">LLM Wiki pattern</a>
+  </footer>
 </body>
 </html>

@@ -1,6 +1,14 @@
 title: VRResearch
 description: A research knowledge base maintained by an LLM.
 
+nav:
+  - { title: Index, url: / }
+  - { title: Overview, url: /overview/ }
+  - { title: Plans, url: /plans/ }
+  - { title: Artefacts, url: /artefacts/ }
+  - { title: Demos, url: /demos/ }
+  - { title: Log, url: /log/ }
+
 # Only the wiki/ folder is published. Raw sources, the app, and repo tooling stay out.
 exclude:
   - raw/
@@ -41,3 +49,11 @@ defaults:
       path: wiki/analyses
     values:
       permalink: /analyses/:basename/
+  - scope:
+      path: wiki/plans
+    values:
+      permalink: /plans/:basename/
+  - scope:
+      path: wiki/artefacts
+    values:
+      permalink: /artefacts/:basename/

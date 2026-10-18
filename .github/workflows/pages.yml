@@ -1,9 +1,21 @@
-name: Publish wiki
+name: Publish site
+
+# Builds the Jekyll wiki (styled with Tailwind) and the React demos app,
+# and deploys both to GitHub Pages: the wiki at /, the demos at /demos/.
 
 on:
   push:
     branches: [main]
-    paths: ["wiki/**", "_config.yml", "_layouts/**", "_plugins/**", "assets/**", "Gemfile", ".github/workflows/pages.yml"]
+    paths:
+      - "wiki/**"
+      - "_config.yml"
+      - "_includes/**"
+      - "_layouts/**"
+      - "_plugins/**"
+      - "_tailwind/**"
+      - "Gemfile"
+      - "app/**"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -15,20 +27,53 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  TAILWIND_VERSION: v4.1.11
+  TAILWIND_SHA256: 64805b84af4292e043ea6f86d242f191c0ac75359c1a498455dfe6c642afdbab
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build site CSS with Tailwind
+        run: |
+          curl -sSLo tailwindcss https://github.com/tailwindlabs/tailwindcss/releases/download/${TAILWIND_VERSION}/tailwindcss-linux-x64
+          echo "${TAILWIND_SHA256}  tailwindcss" | sha256sum -c
+          chmod +x tailwindcss
+          ./tailwindcss -i _tailwind/site.css -o assets/css/site.css --minify
+          rm tailwindcss
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
-      - id: pages
-        uses: actions/configure-pages@v5
-      - run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+
+      - name: Build wiki
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Build demos app
+        working-directory: app
+        run: |
+          npm ci
+          npm run build
+        env:
+          VITE_BASE: ${{ steps.pages.outputs.base_path }}/demos/
+
+      - run: cp -R app/dist _site/demos
+
       - uses: actions/upload-pages-artifact@v3
 
   deploy:

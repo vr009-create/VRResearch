@@ -1,0 +1,16 @@
+{
+  "attachmentFolderPath": "raw/assets",
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "alwaysUpdateLinks": true,
+  "userIgnoreFilters": [
+    "app/",
+    "_site/",
+    "_layouts/",
+    "_includes/",
+    "_plugins/",
+    "_tailwind/",
+    "assets/",
+    "vendor/"
+  ]
+}

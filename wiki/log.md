@@ -14,3 +14,8 @@ Append-only. Recent entries: `grep "^## \[" wiki/log.md | tail -5`
 
 ## [2026-10-18] schema | Jekyll site added
 - Wiki is published with Jekyll via GitHub Actions; Obsidian wikilinks, callouts, and backlinks render on the site.
+
+## [2026-10-18] schema | Plans, artefacts, demos, and Tailwind
+- Added `wiki/plans/` and `wiki/artefacts/` with auto-generated list pages on the site.
+- Added the React demos app (`app/`), published at `/demos/`.
+- Restyled the site with Tailwind CSS; the app uses Tailwind too.
