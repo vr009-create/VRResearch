@@ -1,0 +1,43 @@
+title: VRResearch
+description: A research knowledge base maintained by an LLM.
+
+# Only the wiki/ folder is published. Raw sources, the app, and repo tooling stay out.
+exclude:
+  - raw/
+  - app/
+  - CLAUDE.md
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - node_modules/
+  - .obsidian/
+  - "**/.gitkeep"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Every wiki page gets the page layout and a clean URL, e.g. wiki/concepts/foo.md -> /concepts/foo/
+defaults:
+  - scope:
+      path: wiki
+    values:
+      layout: page
+  - scope:
+      path: wiki/sources
+    values:
+      permalink: /sources/:basename/
+  - scope:
+      path: wiki/entities
+    values:
+      permalink: /entities/:basename/
+  - scope:
+      path: wiki/concepts
+    values:
+      permalink: /concepts/:basename/
+  - scope:
+      path: wiki/analyses
+    values:
+      permalink: /analyses/:basename/

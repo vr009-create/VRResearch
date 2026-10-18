@@ -1,5 +1,7 @@
 ---
 type: index
+title: Index
+permalink: /
 updated: 2026-10-18
 ---
 

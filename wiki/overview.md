@@ -1,5 +1,6 @@
 ---
 type: overview
+permalink: /overview/
 tags: []
 sources: []
 created: 2026-10-18

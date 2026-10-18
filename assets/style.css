@@ -1,0 +1,88 @@
+:root {
+  --bg: #fbfaf7;
+  --fg: #22211f;
+  --muted: #6b6862;
+  --line: #e4e1da;
+  --link: #2f5fb3;
+  --broken: #b0442f;
+  --code-bg: #f1efe9;
+  --note: #2f5fb3;
+  --warning: #b7791f;
+  --danger: #b0442f;
+  --tip: #2f855a;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1b1a;
+    --fg: #e8e6e1;
+    --muted: #9c988f;
+    --line: #34332f;
+    --link: #8fb0f0;
+    --broken: #e58a76;
+    --code-bg: #262624;
+    --note: #8fb0f0;
+    --warning: #e0b05a;
+    --danger: #e58a76;
+    --tip: #74c69d;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding-inline: 16px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 17px/1.65 Charter, "Iowan Old Style", Georgia, serif;
+}
+
+.site-header, main, footer { max-width: 46rem; margin: 0 auto; }
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--line);
+  font-family: system-ui, sans-serif;
+}
+.brand { font-weight: 700; color: var(--fg); text-decoration: none; }
+.site-header nav { display: flex; gap: 1.25rem; font-size: 0.95rem; }
+
+main { padding-block: 2rem 3rem; }
+
+h1, h2, h3 { font-family: system-ui, sans-serif; line-height: 1.25; }
+h1 { font-size: 2rem; margin-top: 0; }
+
+a { color: var(--link); }
+.wikilink { text-decoration: none; border-bottom: 1px solid currentColor; }
+.wikilink.broken { color: var(--broken); border-bottom-style: dashed; cursor: help; }
+
+code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; font-size: 0.88em; }
+pre { background: var(--code-bg); padding: 1rem; border-radius: 6px; overflow-x: auto; }
+pre code { padding: 0; background: none; }
+
+table { border-collapse: collapse; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--line); padding: 0.4rem 0.7rem; }
+
+blockquote { margin: 1.25rem 0; padding: 0.25rem 1rem; border-left: 3px solid var(--line); color: var(--muted); }
+.callout { color: var(--fg); border-left-width: 4px; background: var(--code-bg); border-radius: 0 6px 6px 0; }
+.callout-title { font-family: system-ui, sans-serif; font-weight: 700; margin-bottom: 0.25rem; }
+.callout-note, .callout-info, .callout-abstract { border-left-color: var(--note); }
+.callout-warning, .callout-caution, .callout-question { border-left-color: var(--warning); }
+.callout-danger, .callout-bug, .callout-failure { border-left-color: var(--danger); }
+.callout-tip, .callout-success, .callout-example { border-left-color: var(--tip); }
+
+.meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; font: 0.85rem system-ui, sans-serif; color: var(--muted); }
+.meta .type { text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+
+.backlinks { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); font-family: system-ui, sans-serif; font-size: 0.95rem; }
+.backlinks h2 { font-size: 1rem; color: var(--muted); }
+
+footer { padding-block: 1.5rem; border-top: 1px solid var(--line); font: 0.85rem system-ui, sans-serif; color: var(--muted); }

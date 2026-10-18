@@ -2,3 +2,15 @@
 .obsidian/workspace*.json
 .obsidian/cache
 .trash/
+
+# Jekyll
+_site/
+.jekyll-cache/
+.bundle/
+vendor/
+
+# App
+node_modules/
+.env
+.env.*
+!.env.example

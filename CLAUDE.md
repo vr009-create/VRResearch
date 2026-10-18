@@ -83,6 +83,19 @@ Append-only, newest at the bottom. Every entry starts with a parseable header:
 `## [YYYY-MM-DD] ingest | <Source title>` (or `query`, `lint`, `schema`), followed
 by 1–5 bullets on what changed. `grep "^## \[" wiki/log.md | tail -5` shows recent activity.
 
+## Published site (Jekyll)
+
+`wiki/` is published as a website by `.github/workflows/pages.yml` on every push to
+`main` that touches it. The repo is public, so everything in `wiki/` is public too —
+never write secrets, credentials, or private data into wiki pages.
+
+- `_plugins/obsidian.rb` turns `[[wikilinks]]` into links, renders `> [!kind]` callouts,
+  takes each page's title from its first `# Heading`, and builds "Linked from" backlinks.
+- Keep the `permalink` lines on `index.md` (`/`), `overview.md`, and `log.md`.
+- Other pages get URLs from their folder: `wiki/concepts/foo.md` → `/concepts/foo/`.
+- `raw/`, `app/`, and this file are excluded from the site (`_config.yml`).
+- Local preview (needs Ruby 3): `bundle install && bundle exec jekyll serve`.
+
 ## Git
 
 The wiki is a git repo. After an ingest or lint pass, offer to commit with a message
