@@ -31,6 +31,7 @@ export const demos: Demo[] = [
       'A layer above a Salesforce sandbox: custom dashboards and analytics, bulk data tools, an AI assistant, and guided workflows.',
     status: 'planned',
     tags: ['salesforce', 'analytics', 'ai'],
+    wikiPath: 'plans/salesforce-layer/',
   },
 ]
 

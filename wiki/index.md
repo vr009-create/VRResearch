@@ -21,5 +21,6 @@ Catalog of every page in the wiki. Format: `- [[page]] — summary (N sources)`.
 ## Analyses
 
 ## Plans
+- [[salesforce-layer]] — React app over a Salesforce sandbox: dashboards, bulk data tools, AI assistant, guided workflows (draft, 0 sources)
 
 ## Artefacts

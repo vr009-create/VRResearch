@@ -19,3 +19,7 @@ Append-only. Recent entries: `grep "^## \[" wiki/log.md | tail -5`
 - Added `wiki/plans/` and `wiki/artefacts/` with auto-generated list pages on the site.
 - Added the React demos app (`app/`), published at `/demos/`.
 - Restyled the site with Tailwind CSS; the app uses Tailwind too.
+
+## [2026-10-18] plan | Salesforce sandbox layer
+- Wrote [[salesforce-layer]] (draft): guardrails, architecture, four feature areas, six milestones, setup steps, open questions.
+- Linked the plan to the `salesforce-layer` entry in the demos app; added Mermaid diagram rendering to the site.
